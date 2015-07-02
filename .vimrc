@@ -134,7 +134,6 @@ Plug 'mxw/vim-jsx'
 Plug 'mtscout6/vim-cjsx'
 Plug 'justinj/vim-react-snippets'
 Plug 'myhere/vim-nodejs-complete'
-Plug 'terryma/vim-expand-region'
 
 autocmd FileType javascript setlocal omnifunc=nodejscomplete#CompleteJS
 let g:node_usejscomplete = 1
@@ -179,7 +178,7 @@ Plug 'kana/vim-textobj-user'
 Plug 'akiyan/vim-textobj-php'
 Plug 'thinca/vim-quickrun'
 Plug 'thinca/vim-ref'
-Plug 'Yggdroot/indentLine'
+" Plug 'Yggdroot/indentLine'
 Plug 'bling/vim-airline'
 Plug 'joonty/vdebug'
 Plug 'tpope/vim-eunuch'
@@ -191,6 +190,7 @@ Plug 'thinca/vim-qfreplace'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'rking/ag.vim'
+Plug 'terryma/vim-expand-region'
 
 " color
 Plug 'tejr/sahara'
@@ -323,13 +323,13 @@ let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
       " \ 'MarkToOpen()':         ['<space>'],
   
 " let g:ctrlp_show_hidden = 0
-if executable('files')
-  let g:ctrlp_use_caching = 0
-  let g:ctrlp_user_command = 'files -A %s'
-elseif executable('ag')
+if executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor
   let g:ctrlp_use_caching = 0
   let g:ctrlp_user_command = 'ag %s -l --nocolor --ignore ''.git''  --ignore ''.DS_Store'' --ignore ''*.png'' --ignore ''*.jpg'' --hidden -g ""'
+elseif executable('files')
+  let g:ctrlp_use_caching = 0
+  let g:ctrlp_user_command = 'files -A %s'
 endif
 
 let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
@@ -425,7 +425,7 @@ nmap p <Plug>(yankround-p)
 nmap P <Plug>(yankround-P)
 nmap gp <Plug>(yankround-gp)
 nmap gP <Plug>(yankround-gP)
-nmap <C-p> <Plug>(yankround-prev)
+" nmap <C-p> <Plug>(yankround-prev)
 " nmap <C-n> <Plug>(yankround-next)
 
 "help
@@ -433,8 +433,6 @@ nmap <C-p> <Plug>(yankround-prev)
 
 autocmd BufNewFile,BufRead *.blade.php set ft=blade.php
 autocmd BufNewFile,BufRead *.ect set ft=ect.html
-
-abbrev gc !php artisan generate:controller
 
 " Visual mode surround bindings
 xmap " S"
@@ -475,33 +473,14 @@ let g:quickrun_config.markdown = {
 \ 'exec'      : '%c %o %a %s',
 \ }
 
-" debugger
-let g:vdebug_options= {
-\    "break_on_open" : 0,
-\}
-
 autocmd FileType php let b:vcm_tab_complete = 'tags'
 let g:vcm_default_maps = 0
 inoremap <C-K> <C-x><C-]>
-
-" imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-" smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-" imap <expr><tab> neosnippet#expandable_or_jumpable() ?
-"       \ "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
-" smap <expr><tab> neosnippet#expandable_or_jumpable() ?
-"       \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-" xmap <expr><tab>     <Plug>(neosnippet_expand_target)
-" autocmd InsertLeave * NeoSnippetClearMarkers
-
 
 " For snippet_complete marker.
 if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
-
-" Enable snipMate compatibility feature.
-" let g:neosnippet#enable_snipmate_compatibility = 1
-" let g:neosnippet#snippets_directory = '~/.vim/snippets'
 
 " json systax option
 let g:vim_json_syntax_conceal = 0
@@ -539,7 +518,6 @@ augroup END
 let g:quickrun_config['php.unit'] = {'command': 'phpunit'}
 
 " vdebug
-"
 let g:vdebug_options = {
 \    "break_on_open" : 1,
 \}
@@ -556,7 +534,6 @@ let g:vdebug_keymap = {
 \    "eval_under_cursor" : "<F12>",
 \    "eval_visual" : "<Leader>e",
 \}
-
 
 " nnoremap <c-j> :python debugger.step_over()<cr>
 nnoremap <c-c> :python debugger.close()<cr>
