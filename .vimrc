@@ -110,8 +110,6 @@ Plug 'JazzCore/ctrlp-cmatcher', { 'do': './install.sh' }
 
 Plug 'Shougo/vimfiler'
 Plug 'Shougo/unite.vim'
-" Plug 'Shougo/neosnippet'
-" Plug 'Shougo/neosnippet-snippets'
 Plug 'Shougo/context_filetype.vim'
 
 
@@ -158,7 +156,6 @@ Plug 'StanAngeloff/php.vim'
 
 " ruby
 Plug 'marcus/rsense'
-Plug 'supermomonga/neocomplete-rsense.vim'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-rails'
 let g:rsenseHome = '/usr/local/lib/rsense-0.3'
@@ -341,121 +338,6 @@ let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
 nnoremap <c-]> :CtrlPtjump<cr>
 vnoremap <c-]> :CtrlPtjumpVisual<cr>
 let g:ctrlp_tjump_only_silent = 1
-
-" neocom
-" let g:acp_enableAtStartup = 0
-" Plugin key-mappings.
-if has("lua")
-
-  let g:neocomplete#enable_at_startup = 1
-  let g:neocomplete#enable_smart_case = 1
-  let g:neocomplete#enable_fuzzy_completion = 1
-  let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-  let g:neocomplete#sources#syntax#min_keyword_length = 2
-  let g:neocomplete#auto_completion_start_length = 3
-  let g:neocomplete#skip_auto_completion_time = '0.2'
-  let g:neocomplete#max_list = 10
-	" let g:neocomplete#disable_auto_complete = 1
-  " デフォルト: ['file', 'tag', 'neosnippet', 'vim', 'dictionary', 'omni', 'member', 'syntax', 'include', 'buffer', 'file/include']
-  let g:neocomplete#sources = {
-    \ '_' : ['file', 'vim', 'neosnippet', 'buffer', 'syntax', 'omni']
-    \ }
-
-    " \ '_' : ['file', 'vim', 'neosnippet', 'buffer', 'syntax', 'omni']
-  "
-  " Define keyword.
-  " if !exists('g:neocomplete#keyword_patterns')
-  "     let g:neocomplete#keyword_patterns = {}
-  " endif
-  " let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-  " let g:neocomplete#same_filetypes           = {
-  "     \   'html': 'php' }
-  "
-  inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-  function! s:my_cr_function()
-    return neocomplete#close_popup() . "\<CR>"
-    " For no inserting <CR> key.
-    "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
-  endfunction
-
-  inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-  " inoremap <expr><BS> neocomplete#close_popup()."\<C-h>"
-  " inoremap <expr><C-y>  neocomplete#close_popup()
-  "
-  " " inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-  " " inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-  " " inoremap <expr><BS> neocomplete#smart_close_popup()."\<BS>"
-  "
-  " " Enable heavy omni completion.
-  if !exists('g:neocomplete#sources#omni#input_patterns')
-    let g:neocomplete#sources#omni#input_patterns = {}
-  endif
-  "
-  " if !exists('g:neocomplete#force_omni_input_patterns')
-  "   let g:neocomplete#force_omni_input_patterns = {}
-  " endif
-  "
-  " if !exists('g:neocomplete#force_omni_input_patterns')
-  "   let g:neocomplete#force_omni_input_patterns = {}
-  " endif
-  "
-	" let g:neocomplete#force_omni_input_patterns.python =
-	" \ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
-  "
-  " let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-  " let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-  let g:neocomplete#sources#omni#input_patterns.scss = '^\s\+\w\+\|\w\+[):;]\?\s\+\|[@!]'
-  let g:neocomplete#sources#omni#input_patterns.coffee = '[^. \t]\.\%(\h\w*\)\?'
-  let g:neocomplete#sources#omni#input_patterns.go = '\h\w\.\w*'
-		
-  let g:neocomplete#sources#omni#input_patterns.php =
-		\ '[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
-
-
-else
-  let g:neocomplcache_enable_at_startup = 1
-  let g:neocomplcache_enable_smart_case = 1
-  let g:neocomplcache_enable_fuzzy_completion = 1
-  let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
-  let g:neocomplcache_sources#syntax#min_keyword_length = 2
-  let g:neocomplcache_auto_completion_start_length = 2
-  let g:neocomplcache_skip_auto_completion_time = '0.2'
-  let g:neocomplcache_max_list = 10
-  " let g:neocomplcache_disable_auto_complete=0
-  " " デフォルト: ['file', 'tag', 'neosnippet', 'vim', 'dictionary', 'omni', 'member', 'syntax', 'include', 'buffer', 'file/include']
-  " let g:neocomplcache#sources = {
-  "   \ '_' : ['vim', 'neosnippet', 'buffer', 'file', 'syntax']
-  "   \ }
-  "
-  " " Define keyword.
-  " if !exists('g:neocomplcache#keyword_patterns')
-  "     let g:neocomplcache#keyword_patterns = {}
-  " endif
-  " let g:neocomplcache#keyword_patterns['default'] = '\h\w*'
-  " let g:neocomplcache#same_filetypes           = {
-  "     \   'html': 'html,css,javascript,php',
-  "     \   'blade': 'html,css,javascript,php',}
-  "
-  " inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
-  " inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-  "
-  " inoremap <expr><C-X><C-p>       neocomplcache#start_manual_complete('omni')
-  "
-  " " Enable heavy omni completion.
-  " if !exists('g:neocomplcache_force_omni_patterns')
-  "   let g:neocomplcache_force_omni_patterns = {}
-  " endif
-  "
-  if !exists('g:neocomplcache_omni_patterns')
-    let g:neocomplcache_omni_patterns = {}
-  endif
-
-  let g:neocomplcache_omni_patterns.php =
-		\ '[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
-  " let g:neocomplete#sources#omni#input_patterns.scss = '^\s\+\w\+\|\w\+[):;]\?\s\+\|[@!]'
-  " let g:neocomplete#sources#omni#input_patterns.coffee = '[^. \t]\.\%(\h\w*\)\?'
-  " let g:neocomplete#sources#omni#input_patterns.go = '\h\w\.\w*'
-endif
 
 " git fugitive
 nnoremap <space>d :<C-u>Gdiff<cr>
