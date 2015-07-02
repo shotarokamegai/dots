@@ -1,0 +1,46 @@
+set tabstop=8
+set expandtab
+set shiftwidth=4
+set softtabstop=4
+set notitle
+set nobackup
+set autoread
+set noswapfile
+set hidden " 編集中でも他のファイルを開けるようにする
+set backspace=indent,eol,start
+set browsedir=buffer
+set number
+set showmatch " 括弧の対応をハイライト
+set autoindent
+set smartindent
+set encoding=utf-8
+" set fileencoding=utf-8,euc-jp,cp932
+set incsearch
+set hlsearch "search result heightlist
+set nobomb
+set nocompatible
+set completeopt -=preview
+set previewheight=30
+set clipboard=unnamed
+set foldmethod=manual
+
+nmap <c-e> <End>
+imap <c-a> <ESC>^i
+imap <c-e> <ESC>$a
+imap <c-j> <Down>
+imap { {}<Left>
+imap [ []<Left>
+" imap ( ()<Left>
+imap ' ''<LEFT>
+imap " ""<LEFT>
+" imap jj <ESC><ESC>
+nmap 0 ^
+nmap 9 <C-^>
+nmap <space>r :run<CR>
+nmap <tab> <c-w><c-w>
+
+vmap v i"
+
+nmap ; :
+" nmap <space>r :<c-u>run<cr>
+"
