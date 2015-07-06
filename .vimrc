@@ -111,6 +111,7 @@ Plug 'JazzCore/ctrlp-cmatcher', { 'do': './install.sh' }
 Plug 'Shougo/vimfiler'
 Plug 'Shougo/unite.vim'
 Plug 'Shougo/context_filetype.vim'
+Plug 'keith/swift.vim'
 
 
 Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --gocode-completer' }
@@ -516,6 +517,11 @@ augroup END
 " let g:quickrun_config = {}
 " PHPUnit
 let g:quickrun_config['php.unit'] = {'command': 'phpunit'}
+
+  let g:quickrun_config['swift'] = {
+  \ 'command': 'swift',
+  \ 'exec': '%c %o %s',
+  \}
 
 " vdebug
 let g:vdebug_options = {

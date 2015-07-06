@@ -3,7 +3,7 @@ ZSH=$HOME/.oh-my-zsh
 
 ZSH_THEME="gallifrey"
 
-# plugins=(composer)
+plugins=(composer git hub)
 
 source $ZSH/oh-my-zsh.sh
 # User configuration
@@ -87,3 +87,8 @@ alias gg=github
 #
 # composer user bin
 export PATH=$HOME/.composer/vendor/bin:$PATH
+
+# xcode
+SDKROOT=$(xcrun --show-sdk-path --sdk macosx)
+alias swift="swift -sdk $SDKROOT"
+alias switc="switfc --sdk $SDKROOT"
