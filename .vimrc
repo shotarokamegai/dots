@@ -50,9 +50,9 @@ inoremap jj <Esc><Esc>
 inoremap <C-G> <Esc><Esc>
 nnoremap <C-j> <C-W>j
 nnoremap <C-k> <C-W>k
-" nnoremap <C-l> <C-w>l
+nnoremap <C-l> <C-w>l
 nnoremap <C-h> <C-w>h
-nnoremap <tab> <C-w><C-w>
+" nnoremap <tab> <C-w><C-w>
 " inoremap <C-x><C-c> <C-x><C-]> 
 if has('nvim')
   nmap <BS> <C-W>h
@@ -206,8 +206,8 @@ Plug 'cakebaker/scss-syntax.vim'
 Plug 'digitaltoad/vim-jade'
 
 "doc
-" Plug 'rizzatti/funcoo.vim'
-" Plug 'rizzatti/dash.vim'
+Plug 'rizzatti/funcoo.vim'
+Plug 'rizzatti/dash.vim'
 
 
 call plug#end()
@@ -256,7 +256,6 @@ autocmd FileType go :match goErr /\<err\>/
 nnoremap  [unite]   <Nop>
 nmap    f [unite]
 nnoremap [unite]n :UltiSnipsEdit <CR>
-let g:UltiSnipsEditSplit="horizontal"
 
 " vimfiler
 nnoremap [unite]r :<C-u>VimFilerCurrentDir -toggle -find<Cr>
@@ -324,13 +323,13 @@ let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
       " \ 'MarkToOpen()':         ['<space>'],
   
 " let g:ctrlp_show_hidden = 0
-if executable('ag')
+if executable('files')
+  let g:ctrlp_use_caching = 0
+  let g:ctrlp_user_command = 'files -A %s'
+elseif executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor
   let g:ctrlp_use_caching = 0
   let g:ctrlp_user_command = 'ag %s -l --nocolor --ignore ''.git''  --ignore ''.DS_Store'' --ignore ''*.png'' --ignore ''*.jpg'' --hidden -g ""'
-elseif executable('files')
-  let g:ctrlp_use_caching = 0
-  let g:ctrlp_user_command = 'files -A %s'
 endif
 
 let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
@@ -432,7 +431,7 @@ nmap gP <Plug>(yankround-gP)
 "help
 " nmap <silent> K <Plug>DashSearch
 
-autocmd BufNewFile,BufRead *.blade.php set ft=blade.php
+autocmd BufNewFile,BufRead *.blade.php set ft=blade.php noexpandtab tabstop=2 shiftwidth=2
 autocmd BufNewFile,BufRead *.ect set ft=ect.html
 
 " Visual mode surround bindings
@@ -551,8 +550,8 @@ let g:ycm_min_num_of_chars_for_completion = 3
 let g:ycm_semantic_triggers = {}
 let g:ycm_semantic_triggers['php'] =  ['->', '::']
 let g:ycm_semantic_triggers['coffee'] =  ['.']
-let g:ycm_key_list_select_completion=[]
-let g:ycm_key_list_previous_completion=[]
+let g:ycm_key_list_select_completion=['<c-s>']
+let g:ycm_key_list_previous_completion=['<c-n>']
 " let g:ycm_key_invoke_completion = '<c-cr>'
 
 let g:jsx_ext_required = 1 
@@ -572,4 +571,43 @@ let g:neomake_javascript_enabled_makers = ['eslint']
 " autocmd! BufWritePost *.js,*.jsx,*.py,*.json Neomake
 " let g:neomake_open_list = 1
 
-au BufNewFile,BufRead *.php set noexpandtab tabstop=4 shiftwidth=4
+au BufNewFile,BufRead *.php set noexpandtab tabstop=2 shiftwidth=2
+
+"dash"
+:nmap <silent> <space>d <Plug>DashSearch
+noremap <space>t :<C-u>term
+
+tnoremap <Esc> <C-\><C-n>
+tnoremap <C-h> <C-\><C-n><C-w>h
+tnoremap <C-j> <C-\><C-n><C-w>j
+tnoremap <C-k> <C-\><C-n><C-w>k
+tnoremap <C-l> <C-\><C-n><C-w>l
+
+
+"===============================================================================
+" UltiSnips
+"===============================================================================
+
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+let g:UltiSnipsEditSplit="horizontal"
+" let g:UltiSnipsSnippetsDir="~/dots/UltiSnips"
+
+" Make UltiSnips works nicely with YCM
+function! g:UltiSnips_Complete()
+    call UltiSnips#ExpandSnippet()
+    if g:ulti_expand_res == 0
+        if pumvisible()
+            return "\<C-n>"
+        else
+            call UltiSnips#JumpForwards()
+            if g:ulti_jump_forwards_res == 0
+               return "\<TAB>"
+            endif
+        endif
+    endif
+    return ""
+endfunction
+
+au BufEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"

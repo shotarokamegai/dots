@@ -3,7 +3,7 @@ ZSH=$HOME/.oh-my-zsh
 
 ZSH_THEME="gallifrey"
 
-plugins=(composer git hub)
+plugins=(composer git hub artisan)
 
 source $ZSH/oh-my-zsh.sh
 # User configuration
@@ -92,3 +92,15 @@ export PATH=$HOME/.composer/vendor/bin:$PATH
 SDKROOT=$(xcrun --show-sdk-path --sdk macosx)
 alias swift="swift -sdk $SDKROOT"
 alias switc="switfc --sdk $SDKROOT"
+
+fancy-ctrl-z () {
+  if [[ $#BUFFER -eq 0 ]]; then
+    BUFFER="fg"
+    zle accept-line
+  else
+    zle push-input
+    zle clear-screen
+  fi
+}
+zle -N fancy-ctrl-z
+bindkey '^Z' fancy-ctrl-z

@@ -1,0 +1,28 @@
+snippet class "Description" b
+class ${1:name} {
+	${2}
+}
+endsnippet
+snippet let "Description" b
+let ${1:_} : ${2:type} ${3: = ${4}}
+endsnippet
+
+snippet func "function" b
+func ${1} () {
+	${2}
+}
+endsnippet
+
+snippet funct "function type" b
+func ${1: name} () -> ${2: type}{
+	${3}
+}
+endsnippet
+
+snippet a
+<a href="${1:http://www.${2:example.com}}"</a>
+    $0
+</a>
+endsnippet
+
+

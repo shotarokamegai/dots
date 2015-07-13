@@ -30,12 +30,12 @@ imap <c-e> <ESC>$a
 imap <c-j> <Down>
 imap { {}<Left>
 imap [ []<Left>
-" imap ( ()<Left>
 imap ' ''<LEFT>
 imap " ""<LEFT>
-" imap jj <ESC><ESC>
+imap jj <ESC><ESC>
 nmap 0 ^
 nmap 9 <C-^>
+inoremap <C-G> <Esc><Esc>
 nmap <space>r :run<CR>
 nmap <tab> <c-w><c-w>
 
@@ -43,4 +43,6 @@ vmap v i"
 
 nmap ; :
 " nmap <space>r :<c-u>run<cr>
-"
+
+nnoremap gj j
+nnoremap gk k
