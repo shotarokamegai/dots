@@ -3,7 +3,7 @@ ZSH=$HOME/.oh-my-zsh
 
 ZSH_THEME="gallifrey"
 
-plugins=(composer git hub artisan)
+plugins=(composer git hub laravel)
 
 source $ZSH/oh-my-zsh.sh
 # User configuration
@@ -104,3 +104,8 @@ fancy-ctrl-z () {
 }
 zle -N fancy-ctrl-z
 bindkey '^Z' fancy-ctrl-z
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+function vis() {
+vi $(fzf)
+}

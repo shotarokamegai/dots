@@ -152,7 +152,6 @@ Plug 'vim-jp/vim-go-extra'
 " php
 Plug 'xsbeats/vim-blade'
 Plug 'StanAngeloff/php.vim'
-" Plug 'shawncplus/phpcomplete.vim'
 
 " ruby
 Plug 'marcus/rsense'
@@ -165,7 +164,6 @@ Plug 'marijnh/tern_for_vim', { 'do': 'npm install' }
 
 " python
 Plug 'davidhalter/jedi-vim'
-" Plug 'mitsuhiko/vim-jinja'
 
 " ctag
 Plug 'soramugi/auto-ctags.vim'
@@ -318,18 +316,14 @@ let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
       \ 'CreateNewFile()':      ['<c-u>'],
       \ 'PrtClearCache()':      ['<c-l>']
       \ }
-
-      " \ 'ToggleType(1)':        ['<tab>', '<c-down>'],
-      " \ 'MarkToOpen()':         ['<space>'],
   
-" let g:ctrlp_show_hidden = 0
-if executable('files')
-  let g:ctrlp_use_caching = 0
-  let g:ctrlp_user_command = 'files -A %s'
-elseif executable('ag')
+if executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor
-  let g:ctrlp_use_caching = 0
+  let g:ctrlp_use_caching = 1
   let g:ctrlp_user_command = 'ag %s -l --nocolor --ignore ''.git''  --ignore ''.DS_Store'' --ignore ''*.png'' --ignore ''*.jpg'' --hidden -g ""'
+elseif executable('files')
+  let g:ctrlp_use_caching = 1
+  let g:ctrlp_user_command = 'files -A %s'
 endif
 
 let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
@@ -574,7 +568,7 @@ let g:neomake_javascript_enabled_makers = ['eslint']
 au BufNewFile,BufRead *.php set noexpandtab tabstop=2 shiftwidth=2
 
 "dash"
-:nmap <silent> <space>d <Plug>DashSearch
+nmap <silent> <space>d <Plug>DashSearch
 
 "===============================================================================
 " UltiSnips
