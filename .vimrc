@@ -575,14 +575,6 @@ au BufNewFile,BufRead *.php set noexpandtab tabstop=2 shiftwidth=2
 
 "dash"
 :nmap <silent> <space>d <Plug>DashSearch
-noremap <space>t :<C-u>term
-
-tnoremap <Esc> <C-\><C-n>
-tnoremap <C-h> <C-\><C-n><C-w>h
-tnoremap <C-j> <C-\><C-n><C-w>j
-tnoremap <C-k> <C-\><C-n><C-w>k
-tnoremap <C-l> <C-\><C-n><C-w>l
-
 
 "===============================================================================
 " UltiSnips
