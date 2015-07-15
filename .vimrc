@@ -190,6 +190,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'rking/ag.vim'
 Plug 'terryma/vim-expand-region'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 
 " color
 Plug 'tejr/sahara'
@@ -597,3 +598,5 @@ function! g:UltiSnips_Complete()
 endfunction
 
 au BufEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
+
+nnoremap [unite]f :<C-u>FZF<CR>
