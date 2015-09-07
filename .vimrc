@@ -33,6 +33,7 @@ set noundofile
 set ambiwidth=double
 " set list " 不可視文字の可視化
 " set listchars=tab:>-,trail:-
+filetype off
 
 "default keymap
 nnoremap <c-e> $
@@ -47,6 +48,7 @@ inoremap [ []<left>
 inoremap ( ()<left>
 " inoremap jj <Esc><Esc>
 inoremap jj <Esc><Esc>
+inoremap jk <Esc><Esc>
 inoremap <C-G> <Esc><Esc>
 nnoremap <C-j> <C-W>j
 nnoremap <C-k> <C-W>k
@@ -105,20 +107,20 @@ Plug 'Shougo/vimproc', { 'do': 'make' }
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tacahiroy/ctrlp-funky'
 Plug 'ivalkeen/vim-ctrlp-tjump'
-Plug 'nixprime/cpsm', { 'do': './install.sh' }
+" Plug 'nixprime/cpsm', { 'do': './install.sh' }
 Plug 'JazzCore/ctrlp-cmatcher', { 'do': './install.sh' }
+" Plug 'Shougo/deoplete.nvim'
 
 Plug 'Shougo/vimfiler'
 Plug 'Shougo/unite.vim'
 Plug 'Shougo/context_filetype.vim'
 Plug 'keith/swift.vim'
+" Plug 'Shougo/neocomplete.vim'
 
+" Plug 'Shougo/neosnippet'
+" Plug 'Shougo/neosnippet-snippets'
 
-Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --gocode-completer' }
 " Track the engine.
-Plug 'SirVer/ultisnips'
-" Snippets are separated from the engine. Add this if you want them:
-Plug 'honza/vim-snippets'
 
 " git
 Plug 'tpope/vim-fugitive'
@@ -191,6 +193,7 @@ Plug 'tpope/vim-repeat'
 Plug 'rking/ag.vim'
 Plug 'terryma/vim-expand-region'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
+Plug 'junegunn/vim-easy-align'
 
 " color
 Plug 'tejr/sahara'
@@ -209,10 +212,19 @@ Plug 'rizzatti/funcoo.vim'
 Plug 'rizzatti/dash.vim'
 
 
+Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --gocode-completer' }
+Plug 'SirVer/ultisnips'
+" Snippets are separated from the engine. Add this if you want them:
+Plug 'honza/vim-snippets'
+let g:UltiSnipsUsePythonVersion=2
+
+" let g:UltiSnipsExpandTrigger='<c-j>'
+" let g:UltiSnipsJumpForwardTrigger='<c-j>'
+" let g:UltiSnipsJumpBackwardTrigger='<c-k>'
+
 call plug#end()
 
 syntax on
-filetype on
 filetype plugin indent on 
 
 "
@@ -330,6 +342,9 @@ endif
 let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
 " let g:ctrlp_match_func = {'match': 'cpsm#CtrlPMatch'}
 
+"cps
+let g:cpsm_highlight_mode = 'none'
+
 nnoremap <c-]> :CtrlPtjump<cr>
 vnoremap <c-]> :CtrlPtjumpVisual<cr>
 let g:ctrlp_tjump_only_silent = 1
@@ -376,10 +391,6 @@ autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 	let g:jedi#auto_vim_configuration = 0
 	" alternative pattern: '\h\w*\|[^. \t]\.\w*'
 
-" like php
-" let g:phpcomplete_index_composer_command = 'composer'
-" let g:phpcomplete_relax_static_constraint = 1
-" let g:phpcomplete_search_tags_for_variables = 1
 
 " surrond plugin
 " autocmd filetype php let b:surround_45 = "<?php \r ?>"
@@ -459,18 +470,18 @@ let g:quickrun_config = {
 \       'split': 'vertical'
 \}
 \}
-
-let g:quickrun_config.markdown = {
-\ 'outputter' : 'null',
-\ 'command'   : 'open',
-\ 'cmdopt'    : '-a',
-\ 'args'      : 'Marked',
-\ 'exec'      : '%c %o %a %s',
-\ }
-
-autocmd FileType php let b:vcm_tab_complete = 'tags'
-let g:vcm_default_maps = 0
-inoremap <C-K> <C-x><C-]>
+"
+" let g:quickrun_config.markdown = {
+" \ 'outputter' : 'null',
+" \ 'command'   : 'open',
+" \ 'cmdopt'    : '-a',
+" \ 'args'      : 'Marked',
+" \ 'exec'      : '%c %o %a %s',
+" \ }
+"
+" autocmd FileType php let b:vcm_tab_complete = 'tags'
+" let g:vcm_default_maps = 0
+" inoremap <C-K> <C-x><C-]>
 
 " For snippet_complete marker.
 if has('conceal')
@@ -540,14 +551,31 @@ nnoremap <c-c> :python debugger.close()<cr>
 nnoremap <space>i :python debugger.step_into()<cr>
 nnoremap <space>s :python debugger.run_to_cursor()<cr>
 
-" let g:ycm_max_diagnostics_to_display = 10
-let g:ycm_min_num_of_chars_for_completion = 3
+let g:ycm_max_diagnostics_to_display = 10
+let g:ycm_min_num_of_chars_for_completion = 2
+let g:ycm_collect_identifiers_from_tags_files = 1
+let g:ycm_register_as_syntastic_checker = 1
+let g:ycm_seed_identifiers_with_syntax=1
+let g:ycm_complete_in_comments_and_strings=1
 let g:ycm_semantic_triggers = {}
 let g:ycm_semantic_triggers['php'] =  ['->', '::']
 let g:ycm_semantic_triggers['coffee'] =  ['.']
-let g:ycm_key_list_select_completion=['<c-s>']
+let g:ycm_semantic_triggers['scss'] =  ['re!^\s*', 're!:\s*']
+
+let g:ycm_complete_in_comments = 1 
+let g:ycm_collect_identifiers_from_comments_and_strings = 1 
+let g:ycm_key_list_select_completion=['']
 let g:ycm_key_list_previous_completion=['<c-n>']
 " let g:ycm_key_invoke_completion = '<c-cr>'
+" " call deoplete#util#set_pattern(
+"         \ g:deoplete#_omni_patterns,
+"         \ 'html,xhtml,xml,markdown,mkd',
+"         \ '<[^>]*')
+"   call deoplete#util#set_pattern(
+"         \ g:deoplete#_omni_patterns,
+"         \ 'css,scss,sass',
+
+let g:ycm_filetype_blacklist = {'unite': 1,}
 
 let g:jsx_ext_required = 1 
 
@@ -566,7 +594,7 @@ let g:neomake_javascript_enabled_makers = ['eslint']
 " autocmd! BufWritePost *.js,*.jsx,*.py,*.json Neomake
 " let g:neomake_open_list = 1
 
-au BufNewFile,BufRead *.php set noexpandtab tabstop=2 shiftwidth=2
+au BufNewFile,BufRead *.php setlocal noexpandtab tabstop=4 shiftwidth=4
 
 "dash"
 nmap <silent> <space>d <Plug>DashSearch
@@ -578,25 +606,71 @@ nmap <silent> <space>d <Plug>DashSearch
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-let g:UltiSnipsEditSplit="horizontal"
-" let g:UltiSnipsSnippetsDir="~/dots/UltiSnips"
-
-" Make UltiSnips works nicely with YCM
-function! g:UltiSnips_Complete()
-    call UltiSnips#ExpandSnippet()
-    if g:ulti_expand_res == 0
-        if pumvisible()
-            return "\<C-n>"
-        else
-            call UltiSnips#JumpForwards()
-            if g:ulti_jump_forwards_res == 0
-               return "\<TAB>"
-            endif
-        endif
-    endif
-    return ""
-endfunction
-
-au BufEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
+" let g:UltiSnipsSnippetsDir='~/.vim/snippets'
+" let g:UltiSnipsEditSplit="horizontal"
+" let g:UltiSnipsExpandTrigger="<c-j>"
+" let g:UltiSnipsJumpForwardTrigger="<c-j>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+" let g:UltiSnipsListSnippets="<c-h>"
+" let g:UltiSnipsExpandTrigger = "<nop>"
+" let g:ulti_expand_or_jump_res = 0
+" function ExpandSnippetOrCarriageReturn()
+"     let snippet = UltiSnips#ExpandSnippetOrJump()
+"     if g:ulti_expand_or_jump_res > 0
+"         return snippet
+"     else
+"         return "\<CR>"
+"     endif
+" endfunction
+" inoremap <expr> <tab> pumvisible() ? "<C-R>=ExpandSnippetOrCarriageReturn()<CR>" : "\<CR>"
 
 nnoremap [unite]f :<C-u>FZF<CR>
+
+let g:acp_enableAtStartup = 0
+" Use neocomplete.
+let g:neocomplete#enable_at_startup = 1
+" Use smartcase.
+let g:neocomplete#enable_smart_case = 1
+" Set minimum syntax keyword length.
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+
+ let g:neocomplete#sources = {
+    \ '_' : ['file', 'vim', 'neosnippet', 'buffer', 'syntax', 'omni']
+    \ }
+
+" Enable heavy omni completion.
+if !exists('g:neocomplete#sources#omni#input_patterns')
+  let g:neocomplete#sources#omni#input_patterns = {}
+endif
+	let g:neocomplete#sources#omni#input_patterns.php =
+	\ '[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
+
+
+
+" let g:deoplete#enable_at_startup = 1
+let g:deoplete#auto_completion_start_length = 1
+
+" inoremap <expr><c-space>  deoplete#mappings#manual_complete()
+" Use deoplete.
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_smart_case = 1
+
+" inoremap <expr><C-y>  deoplete#mappings#close_popup()
+" inoremap <expr><C-e>  deoplete#mappings#cancel_popup()
+
+" <C-h>, <BS>: close popup and delete backword char.
+" inoremap <expr><C-h> deolete#mappings#smart_close_popup()."\<C-h>"
+" inoremap <expr><BS> deoplete#mappings#smart_close_popup()."\<C-h>"
+
+let g:deoplete#omni_patterns = {}
+
+" let g:deoplete#omni_patterns.php = 
+"
+"     \ '[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
+" 			\ '[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
+"
+
+		" let g:deoplete#sources = {}
+		" let g:deoplete#sources._ = ['buffer']
+		" let g:deoplete#sources.php = ['buffer', 'tag', 'member']
