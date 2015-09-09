@@ -1,15 +1,28 @@
-# Path to your oh-my-zsh configuration.
+# メモリに保存される履歴の件数
+export HISTSIZE=1000
+
+# 履歴ファイルに保存される履歴の件数
+export SAVEHIST=100000
+
 ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="gallifrey"
+
 source $ZSH/oh-my-zsh.sh
 
 
+# aws
+fpath=($(brew --prefix)/share/zsh-completions $fpath)
 fpath=($(brew --prefix)/share/zsh/site-functions $fpath)
 
 autoload -U compinit
 compinit -u
 
-plugins=(composer git hub laravel)
+
+# source /usr/local/share/zsh/site-functions/_aws
+# source /usr/local/share/zsh/site-functions/_tig
+
+
+plugins=(osx brew composer git hub laravel5 laravel)
 
 export SASS_LIBSASS_PATH=/Users/rootcom/libsass
 export PATH=$HOME/.rbenv/bin:$HOME/bin:/$HOME/sassc/bin:/usr/local/bin:$PATH:~/.composer/vendor/bin:~/AWS-ElasticBeanstalk-CLI-2.6.3/eb/macosx/python2.7:/usr/local/lib/node_modules/casperjs/node_modules/phantomjs/lib/phantom/bin
@@ -21,6 +34,7 @@ alias pm='pstorm'
 # alias vim='open -a MacVim'
 alias vi="nvim"
 alias vim="nvim"
+alias mk="mkdir"
 #
 export GOROOT=/usr/local/opt/go/libexec
 export GOPATH=$HOME/.go
@@ -155,3 +169,58 @@ fi
 ###-end-pm2-completion-###
 #
 # eval "$(docker-machine env default)"
+###-begin-npm-completion-###
+#
+# npm command completion script
+#
+# Installation: npm completion >> ~/.bashrc  (or ~/.zshrc)
+# Or, maybe: npm completion > /usr/local/etc/bash_completion.d/npm
+#
+
+COMP_WORDBREAKS=${COMP_WORDBREAKS/=/}
+COMP_WORDBREAKS=${COMP_WORDBREAKS/@/}
+export COMP_WORDBREAKS
+
+if type complete &>/dev/null; then
+  _npm_completion () {
+    local si="$IFS"
+    IFS=$'\n' COMPREPLY=($(COMP_CWORD="$COMP_CWORD" \
+                           COMP_LINE="$COMP_LINE" \
+                           COMP_POINT="$COMP_POINT" \
+                           npm completion -- "${COMP_WORDS[@]}" \
+                           2>/dev/null)) || return $?
+    IFS="$si"
+  }
+  complete -o default -F _npm_completion npm
+elif type compdef &>/dev/null; then
+  _npm_completion() {
+    local si=$IFS
+    compadd -- $(COMP_CWORD=$((CURRENT-1)) \
+                 COMP_LINE=$BUFFER \
+                 COMP_POINT=0 \
+                 npm completion -- "${words[@]}" \
+                 2>/dev/null)
+    IFS=$si
+  }
+  compdef _npm_completion npm
+elif type compctl &>/dev/null; then
+  _npm_completion () {
+    local cword line point words si
+    read -Ac words
+    read -cn cword
+    let cword-=1
+    read -l line
+    read -ln point
+    si="$IFS"
+    IFS=$'\n' reply=($(COMP_CWORD="$cword" \
+                       COMP_LINE="$line" \
+                       COMP_POINT="$point" \
+                       npm completion -- "${words[@]}" \
+                       2>/dev/null)) || return $?
+    IFS="$si"
+  }
+  compctl -K _npm_completion npm
+fi
+###-end-npm-completion-###
+#
+export FZF_TMUX_HEIGHT=15

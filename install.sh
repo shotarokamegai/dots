@@ -8,5 +8,5 @@ ln -sf $CURDIR/.vimrc $HOME/.vimrc
 ln -sf $CURDIR/.vimrc $HOME/.nvimrc
 ln -sf $CURDIR/.tmux.conf $HOME/.tmux.conf
 ln -sf $CURDIR/.xvimrc $HOME/.xvimrc
-ln -sf $CURDIR/UltiSnips $HOME/.vim/UltiSnips
+ln -sf $CURDIR/.vim $HOME/.xvim
 

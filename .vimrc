@@ -202,6 +202,7 @@ Plug 'tejr/sahara'
 Plug 'kchmck/vim-coffee-script'
 Plug 'othree/html5.vim'
 Plug 'mattn/emmet-vim'
+Plug 'JulesWang/css.vim'
 Plug 'hail2u/vim-css3-syntax'
 Plug 'groenewege/vim-less'
 Plug 'cakebaker/scss-syntax.vim'
@@ -211,16 +212,10 @@ Plug 'digitaltoad/vim-jade'
 Plug 'rizzatti/funcoo.vim'
 Plug 'rizzatti/dash.vim'
 
-
 Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --gocode-completer' }
 Plug 'SirVer/ultisnips'
-" Snippets are separated from the engine. Add this if you want them:
 Plug 'honza/vim-snippets'
 let g:UltiSnipsUsePythonVersion=2
-
-" let g:UltiSnipsExpandTrigger='<c-j>'
-" let g:UltiSnipsJumpForwardTrigger='<c-j>'
-" let g:UltiSnipsJumpBackwardTrigger='<c-k>'
 
 call plug#end()
 
@@ -674,3 +669,4 @@ let g:deoplete#omni_patterns = {}
 		" let g:deoplete#sources = {}
 		" let g:deoplete#sources._ = ['buffer']
 		" let g:deoplete#sources.php = ['buffer', 'tag', 'member']
+    "
