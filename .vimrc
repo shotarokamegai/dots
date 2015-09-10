@@ -212,6 +212,9 @@ Plug 'digitaltoad/vim-jade'
 Plug 'rizzatti/funcoo.vim'
 Plug 'rizzatti/dash.vim'
 
+if has('mac')
+Plug 'ervandew/eclim'
+endif
 Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --gocode-completer' }
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
@@ -670,3 +673,5 @@ let g:deoplete#omni_patterns = {}
 		" let g:deoplete#sources._ = ['buffer']
 		" let g:deoplete#sources.php = ['buffer', 'tag', 'member']
     "
+nnoremap <silent> <buffer> <cr> :PhpSearchContext<cr>
+let g:EclimCompletionMethod = 'omnifunc'

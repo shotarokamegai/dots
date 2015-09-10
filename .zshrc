@@ -15,7 +15,7 @@ fpath=($(brew --prefix)/share/zsh-completions $fpath)
 fpath=($(brew --prefix)/share/zsh/site-functions $fpath)
 
 
-plugins=(osx brew composer git laravel artisan)
+plugins=(osx brew composer git laravel)
 
 source $ZSH/oh-my-zsh.sh
 
