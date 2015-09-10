@@ -28,7 +28,7 @@ export CFLAGS=-Qunused-arguments
 export CPPFLAGS=-Qunused-arguments
 alias pm='pstorm'
 # alias vim='open -a MacVim'
-alias vi='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
+alias mvi='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
 alias vi="nvim"
 alias vim="nvim"
 alias mk="mkdir"
