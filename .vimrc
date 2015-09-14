@@ -212,9 +212,11 @@ Plug 'digitaltoad/vim-jade'
 Plug 'rizzatti/funcoo.vim'
 Plug 'rizzatti/dash.vim'
 
-if has('mac')
-Plug 'ervandew/eclim'
-endif
+Plug 'yssl/QFEnter'
+
+" if has('mac')
+" Plug 'ervandew/eclim'
+" endif
 Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --gocode-completer' }
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
@@ -343,7 +345,7 @@ let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
 "cps
 let g:cpsm_highlight_mode = 'none'
 
-nnoremap <c-]> :CtrlPtjump<cr>
+nnoremap <cr> :CtrlPtjump<cr>
 vnoremap <c-]> :CtrlPtjumpVisual<cr>
 let g:ctrlp_tjump_only_silent = 1
 
@@ -411,7 +413,7 @@ let g:auto_ctags_directory_list = ['.git']
 let g:auto_ctags_bin_path = '/usr/local/bin/ctags'
 " let g:auto_ctags_filetype_mode = 1
 let g:auto_ctags_tags_args = '--exclude=storage --fields=+aimS --languages=php --tag-relative --recurse --sort=yes  --append=no'
-set tags+=.git/tags
+set tags+=.git/tags,~/.vim/tags
 
 " like comment
 if !exists('g:tcomment_types')
@@ -583,16 +585,19 @@ let g:neomake_javascript_eshint_maker = {
     \ 'errorformat': '%A%f: line %l\, col %v\, %m \(%t%*\d\)',
     \ }
 let g:neomake_javascript_enabled_makers = ['eslint']
+let g:neomake_php_enabled_makers = ['php']
+let g:neomake_enabled_makers = ['makeprg']
 
-  " let g:neomake_error_sign = {
-  "     \ 'text': 'E>',
-  "     \ 'texthl': 'ErrorMsg',
-  "     \ }
+let g:neomake_error_sign = {
+    \ 'text': 'E>',
+    \ 'texthl': 'ErrorMsg',
+    \ }
   "
 " autocmd! BufWritePost *.js,*.jsx,*.py,*.json Neomake
 " let g:neomake_open_list = 1
 
 au BufNewFile,BufRead *.php setlocal noexpandtab tabstop=4 shiftwidth=4
+autocmd! BufWritePost * Neomake
 
 "dash"
 nmap <silent> <space>d <Plug>DashSearch
@@ -604,74 +609,15 @@ nmap <silent> <space>d <Plug>DashSearch
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-" let g:UltiSnipsSnippetsDir='~/.vim/snippets'
-" let g:UltiSnipsEditSplit="horizontal"
-" let g:UltiSnipsExpandTrigger="<c-j>"
-" let g:UltiSnipsJumpForwardTrigger="<c-j>"
-" let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-" let g:UltiSnipsListSnippets="<c-h>"
-" let g:UltiSnipsExpandTrigger = "<nop>"
-" let g:ulti_expand_or_jump_res = 0
-" function ExpandSnippetOrCarriageReturn()
-"     let snippet = UltiSnips#ExpandSnippetOrJump()
-"     if g:ulti_expand_or_jump_res > 0
-"         return snippet
-"     else
-"         return "\<CR>"
-"     endif
-" endfunction
-" inoremap <expr> <tab> pumvisible() ? "<C-R>=ExpandSnippetOrCarriageReturn()<CR>" : "\<CR>"
 
 nnoremap [unite]f :<C-u>FZF<CR>
 
-let g:acp_enableAtStartup = 0
-" Use neocomplete.
-let g:neocomplete#enable_at_startup = 1
-" Use smartcase.
-let g:neocomplete#enable_smart_case = 1
-" Set minimum syntax keyword length.
-let g:neocomplete#sources#syntax#min_keyword_length = 3
-let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+" " eclim
+" " let g:EclimCompletionMethod = 'omnifunc'
+" let g:EclimDefaultFileOpenAction = 'vsplit'
 
- let g:neocomplete#sources = {
-    \ '_' : ['file', 'vim', 'neosnippet', 'buffer', 'syntax', 'omni']
-    \ }
-
-" Enable heavy omni completion.
-if !exists('g:neocomplete#sources#omni#input_patterns')
-  let g:neocomplete#sources#omni#input_patterns = {}
-endif
-	let g:neocomplete#sources#omni#input_patterns.php =
-	\ '[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
-
-
-
-" let g:deoplete#enable_at_startup = 1
-let g:deoplete#auto_completion_start_length = 1
-
-" inoremap <expr><c-space>  deoplete#mappings#manual_complete()
-" Use deoplete.
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
-
-" inoremap <expr><C-y>  deoplete#mappings#close_popup()
-" inoremap <expr><C-e>  deoplete#mappings#cancel_popup()
-
-" <C-h>, <BS>: close popup and delete backword char.
-" inoremap <expr><C-h> deolete#mappings#smart_close_popup()."\<C-h>"
-" inoremap <expr><BS> deoplete#mappings#smart_close_popup()."\<C-h>"
-
-let g:deoplete#omni_patterns = {}
-
-" let g:deoplete#omni_patterns.php = 
-"
-"     \ '[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
-" 			\ '[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
-"
-
-		" let g:deoplete#sources = {}
-		" let g:deoplete#sources._ = ['buffer']
-		" let g:deoplete#sources.php = ['buffer', 'tag', 'member']
-    "
-nnoremap <silent> <buffer> <cr> :PhpSearchContext<cr>
-let g:EclimCompletionMethod = 'omnifunc'
+" quickfix
+autocmd FileType qf nnoremap <buffer> q :ccl<CR>
+let g:qfenter_vopen_map = ['<C-v>']
+let g:qfenter_hopen_map = ['<C-CR>', '<C-s>', '<C-x>']
+let g:qfenter_topen_map = ['<C-t>']
