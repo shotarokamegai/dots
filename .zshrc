@@ -31,7 +31,7 @@ alias pm='pstorm'
 alias mvi='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
 alias vi="nvim"
 alias vim="nvim"
-alias mk="mkdir"
+# alias mk="mkdir"
 #
 export GOROOT=/usr/local/opt/go/libexec
 export GOPATH=$HOME/.go
@@ -219,5 +219,11 @@ elif type compctl &>/dev/null; then
 fi
 ###-end-npm-completion-###
 #
-export FZF_TMUX_HEIGHT=15
+export FZF_TMUX_HEIGHT=10
+
+
+export ANDROID_HOME=/usr/local/opt/android-sdk
+
+# http://mycli.net/
+alias mysql=mycli
 

@@ -106,25 +106,21 @@ Plug 'Shougo/vimproc', { 'do': 'make' }
 " depend on ctrlp
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tacahiroy/ctrlp-funky'
+let g:ctrlp_funky_sort_by_mru = 1
+let g:ctrlp_funky_php_include = 1
+let g:ctrlp_funky_php_requires = 1
+
 Plug 'ivalkeen/vim-ctrlp-tjump'
-" Plug 'nixprime/cpsm', { 'do': './install.sh' }
 Plug 'JazzCore/ctrlp-cmatcher', { 'do': './install.sh' }
-" Plug 'Shougo/deoplete.nvim'
+" Plug 'nixprime/cpsm', { 'do': './install.sh' }
 
 Plug 'Shougo/vimfiler'
 Plug 'Shougo/unite.vim'
 Plug 'Shougo/context_filetype.vim'
 Plug 'keith/swift.vim'
-" Plug 'Shougo/neocomplete.vim'
-
-" Plug 'Shougo/neosnippet'
-" Plug 'Shougo/neosnippet-snippets'
-
-" Track the engine.
 
 " git
 Plug 'tpope/vim-fugitive'
-" Plug 'gregsexton/gitv'
 
 
 "javascript"
@@ -157,7 +153,7 @@ Plug 'StanAngeloff/php.vim'
 
 " ruby
 Plug 'marcus/rsense'
-Plug 'tpope/vim-endwise'
+" Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-rails'
 let g:rsenseHome = '/usr/local/lib/rsense-0.3'
 let g:rsenseUseOmniFunc = 1
@@ -413,7 +409,7 @@ let g:auto_ctags_directory_list = ['.git']
 let g:auto_ctags_bin_path = '/usr/local/bin/ctags'
 " let g:auto_ctags_filetype_mode = 1
 let g:auto_ctags_tags_args = '--exclude=storage --fields=+aimS --languages=php --tag-relative --recurse --sort=yes  --append=no'
-set tags+=.git/tags,~/.vim/tags
+set tags+=.git/tags
 
 " like comment
 if !exists('g:tcomment_types')
@@ -528,28 +524,26 @@ let g:quickrun_config['php.unit'] = {'command': 'phpunit'}
   \ 'exec': '%c %o %s',
   \}
 
-" vdebug
-let g:vdebug_options = {
-\    "break_on_open" : 1,
-\}
-" \    "run" : "<c-b>",
+" Vdebug
 let g:vdebug_keymap = {
-\    "run_to_cursor" : "<F1>",
-\    "step_over" : "<F2>",
-\    "step_into" : "<F3>",
-\    "step_out" : "<F4>",
-\    "close" : "<F6>",
-\    "detach" : "<F7>",
-\    "set_breakpoint" : "<F10>",
-\    "get_context" : "<F11>",
-\    "eval_under_cursor" : "<F12>",
+\    "run" : "<Leader>e",
+\    "run_to_cursor" : "<c-/>",
+\    "step_over" : "<c-p>",
+\    "step_into" : "<c-i>",
+\    "step_out" : "<c-o>",
+\    "close" : "q",
+\    "detach" : "x",
+\    "set_breakpoint" : "<Leader>p",
 \    "eval_visual" : "<Leader>e",
 \}
 
-" nnoremap <c-j> :python debugger.step_over()<cr>
-nnoremap <c-c> :python debugger.close()<cr>
-nnoremap <space>i :python debugger.step_into()<cr>
-nnoremap <space>s :python debugger.run_to_cursor()<cr>
+let g:vdebug_options= {
+\    "timeout" : 8,
+\    "break_on_open" : 0,
+\    "continuous_mode": 1,
+\    "on_close": "stop",
+\}
+
 
 let g:ycm_max_diagnostics_to_display = 10
 let g:ycm_min_num_of_chars_for_completion = 2
@@ -562,59 +556,50 @@ let g:ycm_semantic_triggers['php'] =  ['->', '::']
 let g:ycm_semantic_triggers['coffee'] =  ['.']
 let g:ycm_semantic_triggers['scss'] =  ['re!^\s*', 're!:\s*']
 
+let g:ycm_key_list_select_completion   = ['<C-j>', '<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-k>', '<C-p>', '<Up>']
+
 let g:ycm_complete_in_comments = 1 
 let g:ycm_collect_identifiers_from_comments_and_strings = 1 
-let g:ycm_key_list_select_completion=['']
-let g:ycm_key_list_previous_completion=['<c-n>']
 " let g:ycm_key_invoke_completion = '<c-cr>'
-" " call deoplete#util#set_pattern(
-"         \ g:deoplete#_omni_patterns,
-"         \ 'html,xhtml,xml,markdown,mkd',
-"         \ '<[^>]*')
-"   call deoplete#util#set_pattern(
-"         \ g:deoplete#_omni_patterns,
-"         \ 'css,scss,sass',
-
+"
 let g:ycm_filetype_blacklist = {'unite': 1,}
 
 let g:jsx_ext_required = 1 
 
 " checker
-let g:neomake_javascript_eshint_maker = {
-    \ 'args': ['--verbose'],
-    \ 'errorformat': '%A%f: line %l\, col %v\, %m \(%t%*\d\)',
-    \ }
-let g:neomake_javascript_enabled_makers = ['eslint']
-let g:neomake_php_enabled_makers = ['php']
-let g:neomake_enabled_makers = ['makeprg']
+" let g:neomake_javascript_eshint_maker = {
+"     \ 'args': ['--verbose'],
+"     \ 'errorformat': '%A%f: line %l\, col %v\, %m \(%t%*\d\)',
+"     \ }
+" let g:neomake_javascript_enabled_makers = ['eslint']
+" let g:neomake_php_enabled_makers = ['php']
+" let g:neomake_enabled_makers = ['makeprg']
 
-let g:neomake_error_sign = {
-    \ 'text': 'E>',
-    \ 'texthl': 'ErrorMsg',
-    \ }
+" let g:neomake_error_sign = {
+"     \ 'text': 'E>',
+"     \ 'texthl': 'ErrorMsg',
+"     \ }
   "
 " autocmd! BufWritePost *.js,*.jsx,*.py,*.json Neomake
 " let g:neomake_open_list = 1
 
 au BufNewFile,BufRead *.php setlocal noexpandtab tabstop=4 shiftwidth=4
-autocmd! BufWritePost * Neomake
+au BufNewFile,BufRead *blade.php setlocal noexpandtab tabstop=2 shiftwidth=2
+" autocmd! BufWritePost * Neomake
 
 "dash"
 nmap <silent> <space>d <Plug>DashSearch
 
-"===============================================================================
-" UltiSnips
-"===============================================================================
 
+" UltiSnips
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
-nnoremap [unite]f :<C-u>FZF<CR>
-
-" " eclim
-" " let g:EclimCompletionMethod = 'omnifunc'
-" let g:EclimDefaultFileOpenAction = 'vsplit'
+" fzf
+let g:fzf_height=10
+nnoremap [unite]a :<C-u>FZF<CR>
 
 " quickfix
 autocmd FileType qf nnoremap <buffer> q :ccl<CR>
