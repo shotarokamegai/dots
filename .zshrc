@@ -225,5 +225,5 @@ export FZF_TMUX_HEIGHT=10
 export ANDROID_HOME=/usr/local/opt/android-sdk
 
 # http://mycli.net/
-alias mysql=mycli
+# alias mysql=mycli
 

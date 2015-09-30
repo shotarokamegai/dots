@@ -118,6 +118,7 @@ Plug 'Shougo/vimfiler'
 Plug 'Shougo/unite.vim'
 Plug 'Shougo/context_filetype.vim'
 Plug 'keith/swift.vim'
+Plug 'terryma/vim-multiple-cursors'
 
 " git
 Plug 'tpope/vim-fugitive'
@@ -150,6 +151,8 @@ Plug 'vim-jp/vim-go-extra'
 " php
 Plug 'xsbeats/vim-blade'
 Plug 'StanAngeloff/php.vim'
+Plug 'tobyS/pdv'
+Plug 'akiyan/vim-textobj-php'
 
 " ruby
 Plug 'marcus/rsense'
@@ -329,7 +332,7 @@ let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 if executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor
   let g:ctrlp_use_caching = 1
-  let g:ctrlp_user_command = 'ag %s -l --nocolor --ignore ''.git''  --ignore ''.DS_Store'' --ignore ''*.png'' --ignore ''*.jpg'' --hidden -g ""'
+  let g:ctrlp_user_command = 'ag %s -l -i --nocolor --nogroup --ignore ''.git''  --ignore ''.DS_Store'' --ignore ''*.png'' --ignore ''*.jpg'' --hidden -g ""'
 elseif executable('files')
   let g:ctrlp_use_caching = 1
   let g:ctrlp_user_command = 'files -A %s'
@@ -568,24 +571,24 @@ let g:ycm_filetype_blacklist = {'unite': 1,}
 let g:jsx_ext_required = 1 
 
 " checker
-" let g:neomake_javascript_eshint_maker = {
-"     \ 'args': ['--verbose'],
-"     \ 'errorformat': '%A%f: line %l\, col %v\, %m \(%t%*\d\)',
-"     \ }
-" let g:neomake_javascript_enabled_makers = ['eslint']
-" let g:neomake_php_enabled_makers = ['php']
-" let g:neomake_enabled_makers = ['makeprg']
+let g:neomake_javascript_eshint_maker = {
+    \ 'args': ['--verbose'],
+    \ 'errorformat': '%A%f: line %l\, col %v\, %m \(%t%*\d\)',
+    \ }
+let g:neomake_javascript_enabled_makers = ['eslint']
+let g:neomake_php_enabled_makers = ['php']
+let g:neomake_enabled_makers = ['makeprg']
 
-" let g:neomake_error_sign = {
-"     \ 'text': 'E>',
-"     \ 'texthl': 'ErrorMsg',
-"     \ }
+let g:neomake_error_sign = {
+    \ 'text': 'E>',
+    \ 'texthl': 'ErrorMsg',
+    \ }
   "
 " autocmd! BufWritePost *.js,*.jsx,*.py,*.json Neomake
 " let g:neomake_open_list = 1
 
-au BufNewFile,BufRead *.php setlocal noexpandtab tabstop=4 shiftwidth=4
-au BufNewFile,BufRead *blade.php setlocal noexpandtab tabstop=2 shiftwidth=2
+au BufNewFile,BufRead *.php setlocal iskeyword+=$ noexpandtab tabstop=4 shiftwidth=4
+au BufNewFile,BufRead *blade.php setlocal  iskeyword+=$ noexpandtab tabstop=2 shiftwidth=2
 " autocmd! BufWritePost * Neomake
 
 "dash"
