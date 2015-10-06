@@ -118,6 +118,7 @@ Plug 'Shougo/vimfiler'
 Plug 'Shougo/unite.vim'
 Plug 'Shougo/context_filetype.vim'
 Plug 'keith/swift.vim'
+" Plug 'Shougo/deoplete.nvim'
 Plug 'terryma/vim-multiple-cursors'
 
 " git
@@ -153,6 +154,12 @@ Plug 'xsbeats/vim-blade'
 Plug 'StanAngeloff/php.vim'
 Plug 'tobyS/pdv'
 Plug 'akiyan/vim-textobj-php'
+" Plug 'vim-php/vim-composer'
+" let g:composer_cmd = "/usr/local/bin/composer"
+" nnoremap <Leader>p :call g:ComposerKnowWhereCurrentFileIs()<CR>
+" Plug 'davedevelopment/ctrlp-phpnamespace'
+" inoremap <buffer> <leader>u <C-O>:let g:backToInsert=1<CR><C-O>:call PhpInsertUse()<CR><C-O>a
+" noremap <buffer> <leader>u :call PhpInsertUse()<CR>
 
 " ruby
 Plug 'marcus/rsense'
@@ -212,6 +219,7 @@ Plug 'rizzatti/funcoo.vim'
 Plug 'rizzatti/dash.vim'
 
 Plug 'yssl/QFEnter'
+Plug 'osyo-manga/vim-over'
 
 " if has('mac')
 " Plug 'ervandew/eclim'
@@ -599,6 +607,7 @@ nmap <silent> <space>d <Plug>DashSearch
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+let g:UltiSnipsEditSplit="vertical"
 
 " fzf
 let g:fzf_height=10
