@@ -46,3 +46,9 @@ nmap ; :
 
 nnoremap gj j
 nnoremap gk k
+
+nnoremap <cr> :xccmd jumpToDefinition<cr>
+nnoremap <bs> :xccmd goBackInHistoryByCommand<cr>
+
+
+
