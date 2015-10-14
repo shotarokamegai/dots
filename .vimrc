@@ -212,21 +212,19 @@ Plug 'JulesWang/css.vim'
 Plug 'hail2u/vim-css3-syntax'
 Plug 'groenewege/vim-less'
 Plug 'cakebaker/scss-syntax.vim'
-Plug 'digitaltoad/vim-jade'
 
 "doc
 Plug 'rizzatti/funcoo.vim'
 Plug 'rizzatti/dash.vim'
 
-Plug 'yssl/QFEnter'
-Plug 'osyo-manga/vim-over'
-
 " if has('mac')
 " Plug 'ervandew/eclim'
 " endif
-Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --gocode-completer' }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --gocode-completer --clang-completer' }
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+
+
 let g:UltiSnipsUsePythonVersion=2
 
 call plug#end()
@@ -618,3 +616,8 @@ autocmd FileType qf nnoremap <buffer> q :ccl<CR>
 let g:qfenter_vopen_map = ['<C-v>']
 let g:qfenter_hopen_map = ['<C-CR>', '<C-s>', '<C-x>']
 let g:qfenter_topen_map = ['<C-t>']
+
+
+" " translate
+" nnoremap <silent> <space>t :<C-u>ExciteTranslate<CR>
+"

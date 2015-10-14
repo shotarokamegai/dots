@@ -14,8 +14,9 @@ compinit -u
 fpath=($(brew --prefix)/share/zsh-completions $fpath)
 fpath=($(brew --prefix)/share/zsh/site-functions $fpath)
 
-
 plugins=(osx brew composer git laravel)
+
+export EDITOR=nvim
 
 source $ZSH/oh-my-zsh.sh
 
@@ -84,10 +85,11 @@ function agvim () {
 
 alias nvim='TERM=xterm-256color /usr/local/bin/nvim'
 
-# define docker
-export DOCKER_HOST=tcp://$(boot2docker ip 2>/dev/null):2376
-export DOCKER_CERT_PATH=/Users/rootcom/.boot2docker/certs/boot2docker-vm
-export DOCKER_TLS_VERIFY=1
+# export DOCKER_HOST=tcp://$(boot2docker ip 2>/dev/null):2376
+# export DOCKER_CERT_PATH=/Users/rootcom/.boot2docker/certs/boot2docker-vm
+# export DOCKER_TLS_VERIFY=1
+
+alias tm='tmux'
 
 # mysql pager
 # alias mysql="mysql --page='less -S -n -i -F -X'"
@@ -164,7 +166,8 @@ elif type compctl &>/dev/null; then
 fi
 ###-end-pm2-completion-###
 #
-# eval "$(docker-machine env default)"
+# define docker
+eval "$(docker-machine env default)"
 ###-begin-npm-completion-###
 #
 # npm command completion script
@@ -227,3 +230,4 @@ export ANDROID_HOME=/usr/local/opt/android-sdk
 # http://mycli.net/
 # alias mysql=mycli
 
+code () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args $* ;}
