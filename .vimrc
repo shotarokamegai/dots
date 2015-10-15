@@ -20,7 +20,6 @@ set incsearch
 set nrformats=
 set hlsearch "search result heightlist
 set nobomb
-set nocompatible
 set completeopt -=preview
 set previewheight=30
 set clipboard=unnamed
@@ -28,7 +27,7 @@ set foldmethod=manual
 set splitright "縦分割時は右
 set splitbelow
 set lazyredraw
-set ttyfast
+" set ttyfast
 set noundofile
 set ambiwidth=double
 " set list " 不可視文字の可視化
@@ -54,11 +53,11 @@ nnoremap <C-j> <C-W>j
 nnoremap <C-k> <C-W>k
 nnoremap <C-l> <C-w>l
 nnoremap <C-h> <C-w>h
-" nnoremap <tab> <C-w><C-w>
+nnoremap <tab> <C-w><C-w>
 " inoremap <C-x><C-c> <C-x><C-]> 
 if has('nvim')
-  nmap <BS> <C-W>h
-  " nmap <C-h> <C-w>h
+  nmap <C-h> <C-w>h
+  nmap <BS> <C-T>
 endif
 
 noremap ; :
@@ -76,6 +75,7 @@ nnoremap <Up>   gk
 " 逆に普通の行単位で移動したい時のために逆の map も設定しておく
 nnoremap gj j
 nnoremap gk k
+nnoremap <Del> <C-T>
 inoremap <C-j> <Down>
 inoremap <C-h> <Left>
 inoremap <C-l> <Right>
@@ -199,6 +199,7 @@ Plug 'tpope/vim-repeat'
 Plug 'rking/ag.vim'
 Plug 'terryma/vim-expand-region'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
+Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
 
 " color
@@ -226,6 +227,7 @@ Plug 'honza/vim-snippets'
 
 
 let g:UltiSnipsUsePythonVersion=2
+" let g:UltiSnipsSnippetsDir = '~/dots/UltiSnips'
 
 call plug#end()
 
@@ -315,7 +317,7 @@ nnoremap [unite]s :<C-u>CtrlPCurFile<cr>
 "   autocmd!
 "   autocmd FileType * if &modifiable | execute 'silent CtrlPBookmarkDirAdd! %:p:h' | endif
 " augroup END
-let g:ctrlp_map = '<c-f>'
+" let g:ctrlp_map = '<c-f>'
 " let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_extensions = ['mixed', 'bookmarkdir', 'funky']
 let g:ctrlp_open_new_file = 'r'
@@ -558,8 +560,8 @@ let g:ycm_max_diagnostics_to_display = 10
 let g:ycm_min_num_of_chars_for_completion = 2
 let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_register_as_syntastic_checker = 1
-let g:ycm_seed_identifiers_with_syntax=1
-let g:ycm_complete_in_comments_and_strings=1
+let g:ycm_seed_identifiers_with_syntax = 1
+let g:ycm_complete_in_comments_and_strings = 1
 let g:ycm_semantic_triggers = {}
 let g:ycm_semantic_triggers['php'] =  ['->', '::']
 let g:ycm_semantic_triggers['coffee'] =  ['.']
@@ -570,6 +572,12 @@ let g:ycm_key_list_previous_completion = ['<C-k>', '<C-p>', '<Up>']
 
 let g:ycm_complete_in_comments = 1 
 let g:ycm_collect_identifiers_from_comments_and_strings = 1 
+
+
+" 10.15
+let g:ycm_allow_changing_updatetime = 1
+let g:ycm_min_num_identifier_candidate_chars = 2
+
 " let g:ycm_key_invoke_completion = '<c-cr>'
 "
 let g:ycm_filetype_blacklist = {'unite': 1,}
@@ -600,7 +608,6 @@ au BufNewFile,BufRead *blade.php setlocal  iskeyword+=$ noexpandtab tabstop=2 sh
 "dash"
 nmap <silent> <space>d <Plug>DashSearch
 
-
 " UltiSnips
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
@@ -608,16 +615,31 @@ let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 let g:UltiSnipsEditSplit="vertical"
 
 " fzf
-let g:fzf_height=10
-nnoremap [unite]a :<C-u>FZF<CR>
+let g:fzf_layout = { 'down': '12' }
+if has('nvim')
+  let $FZF_DEFAULT_OPTS .= ' --inline-info'
+endif
+function! s:find_root()
+  for vcs in ['.git', '.svn', '.hg']
+    let dir = finddir(vcs.'/..', ';')
+    if !empty(dir)
+      execute 'Files' dir
+      return
+    endif
+  endfor
+  Files
+endfunction
 
-" quickfix
-autocmd FileType qf nnoremap <buffer> q :ccl<CR>
-let g:qfenter_vopen_map = ['<C-v>']
-let g:qfenter_hopen_map = ['<C-CR>', '<C-s>', '<C-x>']
-let g:qfenter_topen_map = ['<C-t>']
-
-
-" " translate
-" nnoremap <silent> <space>t :<C-u>ExciteTranslate<CR>
+" command! FZFMru call fzf#run({
+" \  'source':  v:oldfiles,
+" \  'sink':    'e',
+" \  'options': '-m -x +s',
+" \  'down':    '15'})
+"
+command! FZFR call s:find_root()
+"
+nnoremap <c-f> :<C-u>FZFR<cr>
+" nnoremap <space>e :<C-u>BTags<cr>
+" nnoremap [unite]f :<C-u>FZFMru<cr>
+" nnoremap [unite]g :<c-u>Ag <C-R><C-W><CR>
 "
