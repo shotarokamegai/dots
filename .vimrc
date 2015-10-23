@@ -13,7 +13,7 @@ set number
 set showmatch "括弧の対応をハイライト
 set autoindent
 set smartindent
-set encoding=utf-8
+" set encoding=utf-8
 " set fileencoding=utf-8,euc-jp,cp932
 set incsearch
 " 10進数にする
@@ -33,6 +33,7 @@ set ambiwidth=double
 " set list " 不可視文字の可視化
 " set listchars=tab:>-,trail:-
 filetype off
+" set backspace=0
 
 "default keymap
 nnoremap <c-e> $
@@ -45,8 +46,7 @@ inoremap " ""<left>
 inoremap { {}<Left>
 inoremap [ []<left>
 inoremap ( ()<left>
-" inoremap jj <Esc><Esc>
-inoremap jj <Esc><Esc>
+" exit
 inoremap jk <Esc><Esc>
 inoremap <C-G> <Esc><Esc>
 nnoremap <C-j> <C-W>j
@@ -54,10 +54,15 @@ nnoremap <C-k> <C-W>k
 nnoremap <C-l> <C-w>l
 nnoremap <C-h> <C-w>h
 nnoremap <tab> <C-w><C-w>
+" inner line
+inoremap <c-o> <esc>o
+" delete line
+inoremap <C-D> <esc>ddi
+
 " inoremap <C-x><C-c> <C-x><C-]> 
 if has('nvim')
-  nmap <C-h> <C-w>h
-  nmap <BS> <C-T>
+  noremap <C-h> <C-w>h
+  " nmap <BS> <C-T>
 endif
 
 noremap ; :
@@ -70,29 +75,32 @@ nnoremap - <C-x>
 nnoremap Y y$
 nnoremap j gj
 nnoremap k gk
-nnoremap <Down> gj
-nnoremap <Up>   gk
-" 逆に普通の行単位で移動したい時のために逆の map も設定しておく
 nnoremap gj j
 nnoremap gk k
+nnoremap <Down> gj
+nnoremap <Up>   gk
+
+
 nnoremap <Del> <C-T>
+
 inoremap <C-j> <Down>
+inoremap <C-k> <Up>
 inoremap <C-h> <Left>
 inoremap <C-l> <Right>
 
-" nnoremap <Right> <Nop>
-" nnoremap <Left> <Nop>
-" nnoremap <Up> <Nop>
-" nnoremap <Down> <Nop>
 "set command mode
-command! Ev edit ~/.vimrc
-command! NEv edit ~/.nvimrc
-command! Rv source ~/.vimrc
-command! NRv source ~/.vimrc
-command! Ze edit ~/.zshrc
-command! Zr source ~/.zshrc
+if has('nvim')
+  command! Ev edit ~/.nvimrc
+  command! Rv source ~/.vimrc
+  nmap <BS> <C-W>h
+else
+  command! Ev edit ~/.vimrc
+  command! Rv source ~/.vimrc
+endif
+
 vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
+vnoremap 9 $
 
 set nofoldenable      
 set foldmethod=indent   "fold based on indent
@@ -106,19 +114,15 @@ Plug 'Shougo/vimproc', { 'do': 'make' }
 " depend on ctrlp
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tacahiroy/ctrlp-funky'
-let g:ctrlp_funky_sort_by_mru = 1
-let g:ctrlp_funky_php_include = 1
-let g:ctrlp_funky_php_requires = 1
+" let g:ctrlp_funky_sort_by_mru = 1
 
 Plug 'ivalkeen/vim-ctrlp-tjump'
 Plug 'JazzCore/ctrlp-cmatcher', { 'do': './install.sh' }
-" Plug 'nixprime/cpsm', { 'do': './install.sh' }
 
 Plug 'Shougo/vimfiler'
 Plug 'Shougo/unite.vim'
 Plug 'Shougo/context_filetype.vim'
-Plug 'keith/swift.vim'
-" Plug 'Shougo/deoplete.nvim'
+" Plug 'keith/swift.vim'
 Plug 'terryma/vim-multiple-cursors'
 
 " git
@@ -135,13 +139,14 @@ Plug 'mxw/vim-jsx'
 Plug 'mtscout6/vim-cjsx'
 Plug 'justinj/vim-react-snippets'
 Plug 'myhere/vim-nodejs-complete'
-
-autocmd FileType javascript setlocal omnifunc=nodejscomplete#CompleteJS
+"
+" autocmd FileType javascript setlocal omnifunc=nodejscomplete#CompleteJS
 let g:node_usejscomplete = 1
 "
-Plug 'janko-m/vim-test'
+" Plug 'janko-m/vim-test'
+" let test#strategy = "neovim"
 
-Plug 'benekastah/neomake'
+" Plug 'benekastah/neomake'
 " , { 'for': ['python', 'javascript', 'json'] }
 " golang
 Plug 'google/vim-ft-go'
@@ -154,24 +159,23 @@ Plug 'xsbeats/vim-blade'
 Plug 'StanAngeloff/php.vim'
 Plug 'tobyS/pdv'
 Plug 'akiyan/vim-textobj-php'
-" Plug 'vim-php/vim-composer'
-" let g:composer_cmd = "/usr/local/bin/composer"
-" nnoremap <Leader>p :call g:ComposerKnowWhereCurrentFileIs()<CR>
-" Plug 'davedevelopment/ctrlp-phpnamespace'
-" inoremap <buffer> <leader>u <C-O>:let g:backToInsert=1<CR><C-O>:call PhpInsertUse()<CR><C-O>a
-" noremap <buffer> <leader>u :call PhpInsertUse()<CR>
+Plug 'phpfmt/vim-phpfmt'
+" Plug 'joonty/vim-phpqa'
+" Plug 'mkusher/padawan.vim'
+" Plug 'shawncplus/phpcomplete.vim'
+" Plug 'alvan/vim-php-manual'
 
 " ruby
-Plug 'marcus/rsense'
+" Plug 'marcus/rsense'
 " Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-rails'
-let g:rsenseHome = '/usr/local/lib/rsense-0.3'
-let g:rsenseUseOmniFunc = 1
+" Plug 'tpope/vim-rails'
+" let g:rsenseHome = '/usr/local/lib/rsense-0.3'
+" let g:rsenseUseOmniFunc = 1
 
 Plug 'marijnh/tern_for_vim', { 'do': 'npm install' }
 
 " python
-Plug 'davidhalter/jedi-vim'
+" Plug 'davidhalter/jedi-vim'
 
 " ctag
 Plug 'soramugi/auto-ctags.vim'
@@ -185,7 +189,6 @@ Plug 'kana/vim-textobj-user'
 Plug 'akiyan/vim-textobj-php'
 Plug 'thinca/vim-quickrun'
 Plug 'thinca/vim-ref'
-" Plug 'Yggdroot/indentLine'
 Plug 'bling/vim-airline'
 Plug 'joonty/vdebug'
 Plug 'tpope/vim-eunuch'
@@ -205,25 +208,27 @@ Plug 'junegunn/vim-easy-align'
 " color
 Plug 'tejr/sahara'
 
-" web
+" " web
 Plug 'kchmck/vim-coffee-script'
 Plug 'othree/html5.vim'
 Plug 'mattn/emmet-vim'
 Plug 'JulesWang/css.vim'
 Plug 'hail2u/vim-css3-syntax'
-Plug 'groenewege/vim-less'
+" Plug 'groenewege/vim-less'
 Plug 'cakebaker/scss-syntax.vim'
-
-"doc
+"
+" "doc
 Plug 'rizzatti/funcoo.vim'
 Plug 'rizzatti/dash.vim'
 
-" if has('mac')
-" Plug 'ervandew/eclim'
-" endif
 Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --gocode-completer --clang-completer' }
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+"
+" " markdown
+Plug 'tpope/vim-markdown'
+Plug 'plasticboy/vim-markdown'
+Plug 'junegunn/vim-xmark'
 
 
 let g:UltiSnipsUsePythonVersion=2
@@ -243,7 +248,7 @@ highlight CursorLine guibg=#303000 ctermbg=234
 
 
 " set color
-set t_Co=256
+" set t_Co=256
 colorscheme sahara 
 "
 "set help
@@ -282,7 +287,7 @@ nnoremap [unite]p :<c-u>VimFiler -toggle -project<cr>
 
 let g:vimfiler_as_default_explorer = 1
 let g:vimfiler_safe_mode_by_default = 0
-let g:vimfiler_enable_auto_cd = 1
+" let g:vimfiler_enable_auto_cd = 1
 let g:vimfiler_tree_leaf_icon = ' '
 let g:vimfiler_tree_opened_icon = '▾'
 let g:vimfiler_tree_closed_icon = '▸'
@@ -309,15 +314,13 @@ nnoremap <space>i :<C-u>VimShellInteractive ipython<cr>
 nnoremap [unite]a :<C-u>CtrlprojEdit<cr>
 nnoremap <space>e :<C-u>CtrlPFunky<cr>
 nnoremap [unite]j :<C-u>CtrlPMRU<cr>
-nnoremap [unite]p :<C-u>FZF<cr>
-nnoremap [unite]f :<C-u>CtrlPCurWD<cr>
-nnoremap [unite]s :<C-u>CtrlPCurFile<cr>
+nnoremap [unite]k :<C-u>CtrlPCurFile<cr>
 
 " augroup CtrlPDirMRU
 "   autocmd!
 "   autocmd FileType * if &modifiable | execute 'silent CtrlPBookmarkDirAdd! %:p:h' | endif
 " augroup END
-" let g:ctrlp_map = '<c-f>'
+let g:ctrlp_map = '<c-f>'
 " let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_extensions = ['mixed', 'bookmarkdir', 'funky']
 let g:ctrlp_open_new_file = 'r'
@@ -393,9 +396,9 @@ let g:user_emmet_expandabbr_key = ',,'
 
 autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 
-	autocmd FileType python setlocal omnifunc=jedi#completions
-	let g:jedi#completions_enabled = 0
-	let g:jedi#auto_vim_configuration = 0
+autocmd FileType python setlocal omnifunc=jedi#completions
+let g:jedi#completions_enabled = 0
+let g:jedi#auto_vim_configuration = 0
 	" alternative pattern: '\h\w*\|[^. \t]\.\w*'
 
 
@@ -567,16 +570,16 @@ let g:ycm_semantic_triggers['php'] =  ['->', '::']
 let g:ycm_semantic_triggers['coffee'] =  ['.']
 let g:ycm_semantic_triggers['scss'] =  ['re!^\s*', 're!:\s*']
 
-let g:ycm_key_list_select_completion   = ['<C-j>', '<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-k>', '<C-p>', '<Up>']
+let g:ycm_key_list_select_completion   = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
 
-let g:ycm_complete_in_comments = 1 
-let g:ycm_collect_identifiers_from_comments_and_strings = 1 
+" let g:ycm_complete_in_comments = 1 
+" let g:ycm_collect_identifiers_from_comments_and_strings = 1 
 
 
 " 10.15
-let g:ycm_allow_changing_updatetime = 1
-let g:ycm_min_num_identifier_candidate_chars = 2
+" let g:ycm_allow_changing_updatetime = 1
+" let g:ycm_min_num_identifier_candidate_chars = 2
 
 " let g:ycm_key_invoke_completion = '<c-cr>'
 "
@@ -637,9 +640,34 @@ endfunction
 " \  'down':    '15'})
 "
 command! FZFR call s:find_root()
+imap <c-x><c-k> <plug>(fzf-complete-word)
+nnoremap [unite]f :<C-u>FZFR<cr>
+
+
+function! s:fuji(...)
+  let sh = 'php7 artisan make:controller ' . a:1
+  execute '!' . sh
+endfunction
+
+function! s:hoge(...)
+endfunction
+
+function! s:makeView(...)
+  let dir = finddir('.git/..', ';')
+  if !empty(dir)
+    let path = dir . '/resources/views/' .  a:1
+    execute '!ffile '. path
+    exec 'e ' . path
+  endif
+endfunction
+
+
+command! -nargs=? LController call s:fuji(<f-args>)
+command! -nargs=? LView call s:makeView(<f-args>)
 "
-nnoremap <c-f> :<C-u>FZFR<cr>
-" nnoremap <space>e :<C-u>BTags<cr>
-" nnoremap [unite]f :<C-u>FZFMru<cr>
-" nnoremap [unite]g :<c-u>Ag <C-R><C-W><CR>
 "
+
+"php7
+let g:phpfmt_php_path = '/usr/local/bin/php7'
+" let g:phpfmt_psr1 = 1
+let g:phpfmt_psr2 = 2

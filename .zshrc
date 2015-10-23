@@ -4,6 +4,8 @@ export HISTSIZE=1000
 # 履歴ファイルに保存される履歴の件数
 export SAVEHIST=100000
 
+export TERM=xterm-256color
+
 ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="gallifrey"
 
@@ -14,7 +16,7 @@ compinit -u
 fpath=($(brew --prefix)/share/zsh-completions $fpath)
 fpath=($(brew --prefix)/share/zsh/site-functions $fpath)
 
-plugins=(osx brew composer git laravel)
+plugins=(git aws laravel)
 
 export EDITOR=nvim
 
@@ -22,7 +24,7 @@ source $ZSH/oh-my-zsh.sh
 
 #
 export SASS_LIBSASS_PATH=/Users/rootcom/libsass
-export PATH=$HOME/.rbenv/bin:$HOME/bin:/$HOME/sassc/bin:/usr/local/bin:$PATH:~/.composer/vendor/bin:~/AWS-ElasticBeanstalk-CLI-2.6.3/eb/macosx/python2.7:/usr/local/lib/node_modules/casperjs/node_modules/phantomjs/lib/phantom/bin
+export PATH=/usr/local/bin:$HOME/.rbenv/bin:$HOME/bin:/$HOME/sassc/bin:/usr/local/bin:$PATH:~/.composer/vendor/bin:~/AWS-ElasticBeanstalk-CLI-2.6.3/eb/macosx/python2.7:/usr/local/lib/node_modules/casperjs/node_modules/phantomjs/lib/phantom/bin:~/.bin
 
 # eval "$(rbenv init -)"
 export CFLAGS=-Qunused-arguments
@@ -30,8 +32,9 @@ export CPPFLAGS=-Qunused-arguments
 alias pm='pstorm'
 # alias vim='open -a MacVim'
 alias mvi='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
+alias vi='/usr/local/bin/vim'
 alias vi="nvim"
-alias vim="nvim"
+# alias vim="nvim"
 # alias mk="mkdir"
 #
 export GOROOT=/usr/local/opt/go/libexec
@@ -88,6 +91,10 @@ alias nvim='TERM=xterm-256color /usr/local/bin/nvim'
 # export DOCKER_HOST=tcp://$(boot2docker ip 2>/dev/null):2376
 # export DOCKER_CERT_PATH=/Users/rootcom/.boot2docker/certs/boot2docker-vm
 # export DOCKER_TLS_VERIFY=1
+
+function ko() {
+  open -a Kobito "$@"
+}
 
 alias tm='tmux'
 
@@ -165,9 +172,12 @@ elif type compctl &>/dev/null; then
   compctl -K _pm2_completion + -f + pm2
 fi
 ###-end-pm2-completion-###
-#
+export DOCKER_TLS_VERIFY="1"
+export DOCKER_HOST="tcp://192.168.99.100:2376"
+export DOCKER_CERT_PATH="/Users/rootcom/.docker/machine/machines/default"
+export DOCKER_MACHINE_NAME="default"
 # define docker
-eval "$(docker-machine env default)"
+# eval "$(docker-machine env default)"
 ###-begin-npm-completion-###
 #
 # npm command completion script

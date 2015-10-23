@@ -1,5 +1,29 @@
 snippet doc "Description" b
-/*
-* ${1:desc}
-*/
+/**
+ * ${1:desc}
+ */
+endsnippet
+
+snippet func "function" b
+public function ${1}(${2})
+{
+	${3}
+}
+endsnippet
+
+snippet get "larave ge" b
+Route::get(${1}, ${2});
+endsnippet
+
+snippet nf "function" b
+function() {
+	${1}
+}
+endsnippet
+
+snippet pf "private function" b
+private function ${1}(${2}) 
+{
+	${3}
+}
 endsnippet
