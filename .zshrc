@@ -1,22 +1,20 @@
 # メモリに保存される履歴の件数
 export HISTSIZE=1000
-
 # 履歴ファイルに保存される履歴の件数
 export SAVEHIST=100000
-
 export TERM=xterm-256color
 
 ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="gallifrey"
 
-
 autoload -U compinit
-compinit -u
+# compinit -u
 
 fpath=($(brew --prefix)/share/zsh-completions $fpath)
-fpath=($(brew --prefix)/share/zsh/site-functions $fpath)
+# fpath=($(brew --prefix)/share/zsh/site-functions $fpath)
 
-plugins=(git aws laravel)
+# plugins=(git aws laravel)
+plugins=(git laravel)
 
 export EDITOR=nvim
 
@@ -29,7 +27,7 @@ export PATH=/usr/local/bin:$HOME/.rbenv/bin:$HOME/bin:/$HOME/sassc/bin:/usr/loca
 # eval "$(rbenv init -)"
 export CFLAGS=-Qunused-arguments
 export CPPFLAGS=-Qunused-arguments
-alias pm='pstorm'
+alias psm='pstorm'
 # alias vim='open -a MacVim'
 alias mvi='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
 alias vi='/usr/local/bin/vim'
@@ -112,9 +110,9 @@ alias gg=github
 export PATH=$HOME/.composer/vendor/bin:$PATH
 
 # xcode
-SDKROOT=$(xcrun --show-sdk-path --sdk macosx)
-alias swift="swift -sdk $SDKROOT"
-alias switc="switfc --sdk $SDKROOT"
+# SDKROOT=$(xcrun --show-sdk-path --sdk macosx)
+# alias swift="swift -sdk $SDKROOT"
+# alias switc="switfc --sdk $SDKROOT"
 
 fancy-ctrl-z () {
   if [[ $#BUFFER -eq 0 ]]; then
@@ -186,10 +184,6 @@ export DOCKER_MACHINE_NAME="default"
 # Or, maybe: npm completion > /usr/local/etc/bash_completion.d/npm
 #
 
-COMP_WORDBREAKS=${COMP_WORDBREAKS/=/}
-COMP_WORDBREAKS=${COMP_WORDBREAKS/@/}
-export COMP_WORDBREAKS
-
 if type complete &>/dev/null; then
   _npm_completion () {
     local si="$IFS"
@@ -233,11 +227,13 @@ fi
 ###-end-npm-completion-###
 #
 export FZF_TMUX_HEIGHT=10
-
-
 export ANDROID_HOME=/usr/local/opt/android-sdk
 
 # http://mycli.net/
 # alias mysql=mycli
 
 code () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args $* ;}
+
+# if (which zprof > /dev/null) ;then
+#   zprof | less
+# fi

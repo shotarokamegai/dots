@@ -14,6 +14,9 @@ set showmatch "括弧の対応をハイライト
 set autoindent
 set smartindent
 " set encoding=utf-8
+set enc=utf-8
+set fenc=utf-8
+set fencs=utf-8,euc-jp,cp932
 " set fileencoding=utf-8,euc-jp,cp932
 set incsearch
 " 10進数にする
@@ -90,7 +93,7 @@ inoremap <C-l> <Right>
 
 "set command mode
 if has('nvim')
-  command! Ev edit ~/.nvimrc
+  command! Ev edit ~/.vimrc
   command! Rv source ~/.vimrc
   nmap <BS> <C-W>h
 else
@@ -124,6 +127,7 @@ Plug 'Shougo/unite.vim'
 Plug 'Shougo/context_filetype.vim'
 " Plug 'keith/swift.vim'
 Plug 'terryma/vim-multiple-cursors'
+" Plug 'Shougo/deoplete.nvim' 
 
 " git
 Plug 'tpope/vim-fugitive'
@@ -159,11 +163,12 @@ Plug 'xsbeats/vim-blade'
 Plug 'StanAngeloff/php.vim'
 Plug 'tobyS/pdv'
 Plug 'akiyan/vim-textobj-php'
-Plug 'phpfmt/vim-phpfmt'
+" Plug 'phpfmt/vim-phpfmt'
+Plug 'veloce/vim-behat'
 " Plug 'joonty/vim-phpqa'
 " Plug 'mkusher/padawan.vim'
 " Plug 'shawncplus/phpcomplete.vim'
-" Plug 'alvan/vim-php-manual'
+Plug 'alvan/vim-php-manual'
 
 " ruby
 " Plug 'marcus/rsense'
@@ -258,6 +263,14 @@ autocmd FileType help nnoremap <buffer> q <C-w>c
 "set matcher
 
 if has('nvim')
+
+  tnoremap <Esc> <C-\><C-n>
+  tnoremap <C-w>h <C-\><C-n><C-w>h
+  tnoremap <A-h> <C-\><C-n><C-w>h
+  tnoremap <C-w>j <C-\><C-n><C-w>j
+  tnoremap <C-w>k <C-\><C-n><C-w>k
+  tnoremap <C-w>l <C-\><C-n><C-w>l
+
 else
   source $VIMRUNTIME/macros/matchit.vim
   let b:match_words = '<:>,<\@<=tag>:<\@<=/tag>'
@@ -415,7 +428,7 @@ autocmd QuickFixCmdPost * nested cwindow | redraw!
 let coffee_indent_keep_current = 1
 let coffee_watch_vert = 1
 " let coffee_linter = '/usr/local/bin/coffeelint'
-" autocmd BufWritePost *.coffee silent make!
+autocmd BufWritePost *.coffee silent make!
 
 " ctags plugin
 let g:auto_ctags = 1
@@ -644,30 +657,60 @@ imap <c-x><c-k> <plug>(fzf-complete-word)
 nnoremap [unite]f :<C-u>FZFR<cr>
 
 
-function! s:fuji(...)
-  let sh = 'php7 artisan make:controller ' . a:1
+function! s:controller(...)
+  let sh = 'php artisan make:controller ' . a:1
   execute '!' . sh
 endfunction
 
-function! s:hoge(...)
-endfunction
-
-function! s:makeView(...)
+function! s:view(...)
   let dir = finddir('.git/..', ';')
   if !empty(dir)
-    let path = dir . '/resources/views/' .  a:1
+    let path = dir . '/resources/views/' .  a:1 . '.blade.php'
     execute '!ffile '. path
     exec 'e ' . path
   endif
 endfunction
 
+function! s:test(...)
+  let sh = 'php artisan make:test ' . a:1
+  execute '!' . sh
+endfunction
 
-command! -nargs=? LController call s:fuji(<f-args>)
-command! -nargs=? LView call s:makeView(<f-args>)
-"
-"
+function! s:seed(...)
+  let sh = 'php artisan make:seeder ' . a:1
+  execute '!' . sh
+endfunction
+
+function! s:middleware(...)
+  let sh = 'php artisan make:middleware ' . a:1
+  execute '!' . sh
+endfunction
+
+function! s:model(...)
+  let sh = 'php artisan make:model ' . a:1
+  execute '!' . sh
+endfunction
+
+command! -nargs=? Lcontroller call s:controller(<f-args>)
+command! -nargs=? Lview call s:view(<f-args>)
+command! -nargs=? Lmodel call s:model(<f-args>)
+command! -nargs=? Ltest call s:test(<f-args>)
+command! -nargs=? Lseed call s:seed(<f-args>)
+command! -nargs=? Lmid call s:middleware(<f-args>)
 
 "php7
 let g:phpfmt_php_path = '/usr/local/bin/php7'
 " let g:phpfmt_psr1 = 1
 let g:phpfmt_psr2 = 2
+
+if has('nvim')
+  nnoremap <space>t :<C-u>split term://zsh<cr>
+  nnoremap <space>y :<C-u>vsplit term://zsh<cr>
+  autocmd BufWinEnter,WinEnter term://* startinsert 
+  au BufEnter * if &buftype == 'terminal' | set modifiable | endif
+  autocmd BufLeave term://* stopinsert
+endif
+
+
+
+

@@ -27,3 +27,30 @@ private function ${1}(${2})
 	${3}
 }
 endsnippet
+snippet fun "Description" b
+public function ${1}() {}
+endsnippet
+
+snippet setup "php unit setup" b	
+function setUp()
+{
+		parent::setUp();
+		${1}
+}
+endsnippet
+snippet mock "mock model define" b
+$factory->define(${1:classname}::class, function (Faker\Generator $faker) {
+	${2:object}
+});
+endsnippet
+snippet factory "model factory" b
+factory(${1:class}::class, ${2:num})->create()->each(function($u) {
+	${3}
+});
+endsnippet
+snippet scope "scope model" b
+public function score${1:name}($query)
+{
+	${2}
+}
+endsnippet
