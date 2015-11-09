@@ -50,6 +50,7 @@ nnoremap <C-j> <C-W>j
 nnoremap <C-k> <C-W>k
 nnoremap <C-l> <C-w>l
 nnoremap <C-h> <C-w>h
+nnoremap <tab> <c-w><c-w>
 noremap ; :
 nnoremap 0 ^
 nnoremap 9 <C-^>
@@ -58,23 +59,24 @@ nnoremap gk k
 
 nnoremap  [unite]   <Nop>
 nmap    f [unite]
-nnoremap <c-f> :<C-u>action SearchEverywhere<cr>
-nnoremap % :<C-u>action EditorMatchBrace<cr>
+map <c-j> <Down>
+map <c-k> <Up>
+
+" ideavim action
+nnoremap <c-f> :action SearchEverywhere<cr>
+nnoremap % :<action EditorMatchBrace<cr>
 nnoremap <space>p :<C-u>action SplitVertically<cr>
 nnoremap Q :<C-u>action CloseContent<cr>
 nnoremap <space>d :<C-u>action PhpListenDebugAction<cr>
-
-
-" ideavim action
-vnoremap S :<C-u>action SurroundWithEmmet<cr>
-vnoremap v :action EditorSelectWord<cr>
 nnoremap <M-j> :action EditorSelectWord<cr>
 nnoremap <M-k> :action EditorUnSelectWord<cr>
 nnoremap <cr> :action GotoDeclaration<cr>
 nnoremap <bs> :action Back<cr>
-nnoremap <space>f :action CheckinProject<cr>
+" nnoremap <space>f :action CheckinProject<cr>
+nnoremap <c-j> :action MoveTabDown<cr>
+nnoremap <c-l> :action MoveTabRight<cr>
+nnoremap <c-u> :action Unsplit<cr>
+nnoremap <c-s> :action ChangeSplitOrientation<cr>
 
-map <c-j> <Down>
-map <c-k> <Up>
 
 
